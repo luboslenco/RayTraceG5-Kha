@@ -4,6 +4,9 @@ Build:
 `node Kha/make -g direct3d12 --raytrace dxr`
 
 Compile shader:
-`.\dxc.exe -Zpr -Fo .\simple_closesthit.o -T lib_6_1 .\simple_closesthit.hlsl`
+`.\dxc.exe -Zpr -Fo .\simple.cso -T lib_6_3 .\simple.hlsl`
+
+Reference:
+https://github.com/Microsoft/DirectX-Graphics-Samples/tree/master/Samples/Desktop/D3D12Raytracing
 
 ![](img.jpg)

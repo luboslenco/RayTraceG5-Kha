@@ -28,19 +28,15 @@ class Main {
 	private static var pipeline: RayTracePipeline;
 	private static var accel: AccelerationStructure;
 	
-	static function loadShaderBlobs(f:kha.Blob->kha.Blob->kha.Blob->Void) {
-		kha.Assets.loadBlobFromPath("simple_raygeneration.o", function(rayShader:kha.Blob) {
-			kha.Assets.loadBlobFromPath("simple_closesthit.o", function(hitShader:kha.Blob) {
-				kha.Assets.loadBlobFromPath("simple_miss.o", function(missShader:kha.Blob) {
-					f(rayShader, hitShader, missShader);
-				});
-			});
+	static function loadShaderBlobs(f: kha.Blob->Void) {
+		kha.Assets.loadBlobFromPath("simple.cso", function(rayTraceShader: kha.Blob) {
+			f(rayTraceShader);
 		});
 	}
 
 	public static function main(): Void {
 		System.start({title: "RayTrace", width: 1280, height: 720}, function (_) {
-			loadShaderBlobs(function(rayShader: kha.Blob, hitShader: kha.Blob, missShader: kha.Blob) {
+			loadShaderBlobs(function(rayTraceShader: kha.Blob) {
 
 				// Command list
 				commandList = new CommandList();
@@ -59,7 +55,7 @@ class Main {
 				constantBuffer.setFloat(12, 1);
 				constantBuffer.unlock();
 
-				pipeline = new RayTracePipeline(commandList, rayShader, hitShader, missShader, constantBuffer);
+				pipeline = new RayTracePipeline(commandList, rayTraceShader, constantBuffer);
 
 				// Acceleration structure
 				var structure = new VertexStructure();
